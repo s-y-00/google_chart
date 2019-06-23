@@ -54,6 +54,7 @@
 
                 var buy_color = '#109618';
                 var sell_color = '#D32F2F';
+                var color = (side == 'buy' ? '#109618' : '#D32F2F')
                 
                 if(side == 'sell'){
                     dt.addRow([datetime.getTime(), side == 'sell' ? Number(price):null, side == 'buy' ? Number(price):null, 'point { fill-color: ' + sell_color + '}']);
@@ -99,10 +100,10 @@
                 // display
                 //container.append("<p>" + price + "</p>");
                 var row = '';
-                row += "<tr>";
-                row += ("<td bgcolor=\"white\" align=\"right\">" + price + "</td>")
-                row += ("<td bgcolor=\"white\" align=\"right\">" + vol + "</td>")
-                row += ("<td bgcolor=\"white\" align=\"right\">" + side + "</td>")
+                row += "<tr bgcolor=\"" + color + "\">";
+                row += ("<td align=\"right\">" + price + "</td>")
+                row += ("<td align=\"right\">" + vol + "</td>")
+                row += ("<td align=\"right\">" + side + "</td>")
                 row += ("</tr>")
                 recentTrades.prepend(row);
 
