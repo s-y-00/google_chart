@@ -1,0 +1,12 @@
+#recentTrades {
+    font-size:10px;
+    overflow-y : scroll;
+    width: 300;
+    height: 400px;
+    background-color: lightgray;
+}
+
+#resentTrades table tbody td {
+    bgcolor=white;
+    align=right;
+}
