@@ -7,6 +7,17 @@
 }
 
 #resentTrades table tbody td {
-    bgcolor=white;
-    align=right;
+    bgcolor : white;
+    align : right;
+}
+
+body {
+    background-color:#222222;
+    text-color : white;
+}
+
+.chartArea .plotArea {
+    width: 100%; 
+    height: 300px;
+    margin: 0 0 1em;
 }
