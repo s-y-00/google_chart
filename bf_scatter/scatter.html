@@ -72,7 +72,7 @@
 
                         // display options
                         var options = {
-                            title: 'executions',
+                            title: 'bitflyer BTC-FX/JPY',
                             titleTextStyle: {
                                 color: '#FFF',
                             },
@@ -164,7 +164,7 @@
                     socket.send(JSON.stringify({
                         method: "subscribe",
                         params: {
-                            channel: "lightning_executions_FX_BTC_JPY"  // executions BTCJPYFX
+                            channel: "lightning_executions_BTC_JPY"  // executions BTCJPY
                         }
                     }));
                 };
@@ -194,7 +194,7 @@
 
                         // display options
                         var options = {
-                            title: 'executions',
+                            title: 'bitflyer BTC/JPY',
                             titleTextStyle: {
                                 color: '#FFF',
                             },
