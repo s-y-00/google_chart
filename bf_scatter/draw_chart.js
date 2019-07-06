@@ -255,11 +255,3 @@ $(function ()
         return socket;
     }
 });
-
-function deleterow(tableID)
-{
-    var table = document.getElementById(tableID);
-    var rowCount = table.rows.length;
-
-    table.deleteRow(rowCount - 1);
-}
