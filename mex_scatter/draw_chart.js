@@ -24,7 +24,7 @@ $(function ()
     {
         var socket = new WebSocket("wss://www.bitmex.com/realtime");
         var container = $("#containerDiv");
-        var recentTrades = $("#recentTrades table tbody");
+
         socket.onopen = function ()
         {
             container.append("<p>Socket is open</p>");
@@ -36,83 +36,85 @@ $(function ()
             }));
         };
 
-        socket.onmessage = function (e)
+        socket.onmessage = function (msg)
         {
-            var response = JSON.parse(e.data);
+            var response = JSON.parse(msg.data);
 
-            response.params.message.forEach(function (data)
+            if (response['data'])
             {
-
-                var id = data['id'];
-                var timestamp = new Date(data['exec_date']);
-                var price = data['price'];
-                var side = data['side'];
-                var vol = data['size'];
-
-                var datetime = new Date;
-
-                var buy_color = '#109618';
-                var sell_color = '#D32F2F';
-                var color = (side == 'BUY' ? '#109618' : '#D32F2F')
-
-                if (side == 'SELL')
+                response['data'].forEach(function (data)
                 {
-                    data_table.addRow([timestamp.getTime(), side == 'SELL' ? Number(price) : null, side == 'BUY' ? Number(price) : null, 'point { fill-color: ' + sell_color + '}']);
-                } else if (side == 'BUY')
-                {
-                    data_table.addRow([timestamp.getTime(), side == 'SELL' ? Number(price) : null, side == 'BUY' ? Number(price) : null, 'point { fill-color: ' + buy_color + '}']);
-                }
+                    var timestamp = new Date(data['timestamp']);
+                    var price = data['price'];
+                    var side = data['side'];
+                    var vol = data['size'];
 
-                // display options
-                var options = {
-                    title: 'bitflyer BTC/JPY',
-                    titleTextStyle: {
-                        color: '#FFF',
-                    },
-                    //legend: { position: 'none' },
-                    legend: {
-                        textStyle: {
-                            color: 'white'
+                    var datetime = new Date;
+
+                    var buy_color = 'green';
+                    var sell_color = 'red';
+                    var color = (side == 'Buy' ? 'green' : 'red')
+                    console.log(side + color);
+                    if (side == 'Sell')
+                    {
+                        data_table.addRow([
+                            timestamp.getTime(),
+                            side == 'Sell' ? Number(price) : null,
+                            side == 'Buy' ? Number(price) : null,
+                            'point { fill-color: ' + sell_color + '}'
+                        ]);
+                    } else if (side == 'Buy')
+                    {
+                        data_table.addRow([
+                            timestamp.getTime(),
+                            side == 'Sell' ? Number(price) : null,
+                            side == 'Buy' ? Number(price) : null,
+                            'point { fill-color: ' + buy_color + '}'
+                        ]);
+                    }
+
+                    // display options
+                    var options = {
+                        title: 'bitMex XBT/USD',
+                        titleTextStyle: {
+                            color: '#FFF',
                         },
-                        pagingTextStyle: { color: '#666' },
-                        scrollArrows: 'none'
-                    },
-                    vAxis: {
-                        scaleType: 'log',
-                        textStyle: { color: '#FFF' },
-                        gridlines: { color: '#696969' },
-                    },
-                    hAxis: {
-                        textPosition: 'none',
-                        scaleType: 'log',
-                        textStyle: { color: '#FFF' },
-                        gridlines: { color: '#696969' },
-                    },
-                    'backgroundColor': 'transparent',
-                };
+                        //legend: { position: 'none' },
+                        legend: {
+                            textStyle: {
+                                color: 'white'
+                            },
+                            pagingTextStyle: { color: '#666' },
+                            scrollArrows: 'none'
+                        },
+                        vAxis: {
+                            scaleType: 'log',
+                            textStyle: { color: '#FFF' },
+                            gridlines: { color: '#696969' },
+                        },
+                        hAxis: {
+                            textPosition: 'none',
+                            scaleType: 'log',
+                            textStyle: { color: '#FFF' },
+                            gridlines: { color: '#696969' },
+                        },
+                        'backgroundColor': 'transparent',
+                    };
 
-                // create bar chart
-                var chart = new google.visualization.ScatterChart(document.getElementById('btc_jpy'));
+                    // create bar chart
+                    var chart = new google.visualization.ScatterChart(document.getElementById('btc_jpy'));
 
-                // draw chat
-                chart.draw(data_table, options);
+                    // draw chat
+                    chart.draw(data_table, options);
 
-                // display
-                var row = '';
-                row += "<tr bgcolor=\"" + color + "\">";
-                row += ("<td align=\"right\">" + price + "</td>")
-                row += ("<td align=\"right\">" + vol + "</td>")
-                row += ("<td align=\"right\">" + side + "</td>")
-                row += ("</tr>")
-                recentTrades.prepend(row);
-
-                tbl_row_size = data_table.getNumberOfRows();
-                if (tbl_row_size > 100)
-                {
-                    // remove oldest one
-                    data_table.removeRow(0);
-                }
-            });
+                    tbl_row_size = data_table.getNumberOfRows();
+                    if (tbl_row_size > 100)
+                    {
+                        // remove oldest one
+                        data_table.removeRow(0);
+                    }
+                });
+            }
         }
 
         socket.onclose = function ()
