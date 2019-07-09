@@ -57,9 +57,9 @@ $(function ()
 
                 var datetime = new Date;
 
-                var buy_color = '#109618';
+                var buy_color = 'red';
                 var sell_color = '#D32F2F';
-                var color = (side == 'BUY' ? '#109618' : '#D32F2F')
+                var color = (side == 'BUY' ? 'red' : '#D32F2F')
 
                 if (side == 'SELL')
                 {
@@ -184,9 +184,9 @@ $(function ()
 
                 var datetime = new Date;
 
-                var buy_color = '#109618';
+                var buy_color = 'red';
                 var sell_color = '#D32F2F';
-                var color = (side == 'BUY' ? '#109618' : '#D32F2F')
+                var color = (side == 'BUY' ? 'red' : '#D32F2F')
 
                 if (side == 'SELL')
                 {
